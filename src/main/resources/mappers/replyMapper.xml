@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.recipe.mappers.replyMapper">
+
+<select id="list" resultType="ReplyVO">
+	select * from board_reply where bno = #{bno} order by reply_no desc
+	<!-- select * from member as m join board_reply br on bno =#{bno} and m.member_id = br.reply_writer order by reply_no desc -->
+</select>
+
+
+<insert id="insert">
+	insert into board_reply(bno, reply_writer, reply_text) values(#{bno}, #{reply_writer}, #{reply_text})
+</insert>
+
+
+<update id="update">
+	update board_reply set reply_text = #{reply_text}, reply_updatedate = now() where reply_no = #{reply_no}
+</update>
+
+<delete id="delete">
+	delete from board_reply where reply_no = #{reply_no}
+</delete>
+
+
+<select id="pagingList" resultType="ReplyJoinMemberVO">
+	<![CDATA[
+		select * from ( select * from board_reply order by reply_no desc limit #{criteria.pageStart}, #{criteria.perPageNum})as br join member as m on bno = #{bno} and br.reply_writer = m.member_id; 
+	]]>
+	
+</select>
+
+<select id="countReply" resultType="int">
+	select count(reply_no) from board_reply where bno = #{bno}
+</select>
+
+<select id="getBno" resultType="int">
+	select bno from board_reply where reply_no = #{reply_no}
+</select>
+
+</mapper>

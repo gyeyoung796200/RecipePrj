@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  transition: margin 0.25s ease-out;
+}
+
+.border-end {
+  border-right: 1px solid gray;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+.list-group-flush > .list-group-item {
+  border-width: 0 0 1px;
+}
+
+.list-group-item-light {
+  color: #636464;
+  background: #fefefe;
+}
+
+.list-group-item-action {
+  width: 100%;
+  text-align: inherit;
+}
+
+#page-content-wrapper {
+  width: 100%;
+}
+
+.dropdown-menu-end {
+  --bs-position: end;
+}
+
+
+#id_true, #id_false{
+	
+	display : none;
+}
