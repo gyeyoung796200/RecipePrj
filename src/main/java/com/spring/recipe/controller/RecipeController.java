@@ -6,10 +6,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
@@ -77,6 +82,21 @@ public class RecipeController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value = "/add3", method = RequestMethod.GET)
+	public ModelAndView getRecipeAdd3() throws Exception{
+		
+		logger.info("get Recipe add3");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		
+		mav.addObject("mainData", "recipe/add3.jsp");
+		mav.setViewName("index");
+		
+		return mav;
+	}
+	
 	//ckeditor post
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView postRecipeAdd(RecipeVO recipeVO, RedirectAttributes rttr, MultipartFile file) throws Exception{
@@ -135,6 +155,53 @@ public class RecipeController {
 		
 		return mav;
 	}
+	
+	
+	//summernote post 페이지 수정
+		@RequestMapping(value = "/add3", method = RequestMethod.POST)
+		public ModelAndView postRecipeAdd3(RecipeVO recipeVO, RedirectAttributes rttr, MultipartFile file, HttpServletRequest request) throws Exception{
+			
+			
+			
+			//스트링 배열로 재료 받기
+			String[] material_name = request.getParameterValues("material_name");
+			String[] material_amount = request.getParameterValues("material_amount");
+			
+			
+			
+			
+			
+			
+			
+
+			
+						
+			
+			
+			logger.info("post Recipe add");
+			logger.info("정보 : "+ recipeVO.toString());
+			
+			String recipeUploadPath = uploadPath + File.separator + "recipeUpload";
+			String ymdPath = UploadFileUtils.calcPath(recipeUploadPath); //위의 폴더를 기준으로 연월일 폴더를 생성
+			String fileName = null; //기본경로와 별개로 작성되는 경로 + 파일이름
+			
+			
+			if(file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+
+				fileName = UploadFileUtils.fileUpload(recipeUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+				
+				recipeVO.setRecipe_image(File.separator + "recipeUpload" + ymdPath + File.separator + fileName );
+			}
+			
+			service.addRecipe(recipeVO);
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.addObject("mainData", "recipe/listCriteria.jsp");
+			mav.setViewName("redirect:/recipe/listCriteria");
+			
+			return mav;
+		}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView getRecipeList() throws Exception{
@@ -215,7 +282,7 @@ public class RecipeController {
 	
 	
 	@RequestMapping(value = "/infoHandlebars", method = RequestMethod.GET)
-	public ModelAndView getRecipeInfoHandlebars(int recipe_no, @ModelAttribute("criteria") Criteria cri) throws Exception{
+	public ModelAndView getRecipeInfoHandlebars(int recipe_no, @ModelAttribute("criteria") Criteria cri, HttpServletRequest request) throws Exception{
 		
 		logger.info("get Recipe info");
 		
@@ -241,8 +308,43 @@ public class RecipeController {
 			mav.addObject("type", "일식");
 		}
 		
+		int val = recipe.getMaterial_name().split(",").length;
 		
-		mav.addObject("mainData", "recipe/infoHandlebars.jsp");
+		String[] material_name_val = recipe.getMaterial_name().split(",");
+		
+		String[] material_amount_val = recipe.getMaterial_amount().split(",");
+		
+		
+		
+		List<String> material_name_list = new ArrayList<String>();
+		
+		List<String> material_amount_list = new ArrayList<String>();
+		
+
+		for(int i =0; i < val; i++) {
+			
+			String str = material_amount_val[i];
+			
+			str.split(",");
+			
+			material_amount_list.add(str);
+		}
+		
+		
+		for(int i = 0; i < val; i++) {
+			
+			
+			String str = material_name_val[i];
+			
+			str.split(",");
+			
+			material_name_list.add(str);
+			
+		}
+		
+		mav.addObject("material_name_list", material_name_list);
+		mav.addObject("material_amount_list", material_amount_list);
+		mav.addObject("mainData", "recipe/infoHandlebars2.jsp");
 		mav.addObject("cook", service.info(recipe_no));
 		
 		mav.setViewName("index");

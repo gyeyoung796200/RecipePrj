@@ -5,9 +5,47 @@
   <mapper namespace="com.spring.recipe.mappers.recipeMapper">
   
   <insert id="addRecipe" parameterType="RecipeVO">
-  insert into recipe(recipe_no, recipe_writer, recipe_type, recipe_name, recipe_image, recipe_content, recipe_regdate, recipe_updatedate)
+  insert into recipe(
+  				recipe_no, 
+  				recipe_writer, 
+  				recipe_type, 
+  				recipe_name, 
+  				recipe_image, 
+  				recipe_content, 
+  				recipe_regdate, 
+  				recipe_updatedate,
+  				
+  				cook_amount,
+  				cook_time,
+  				cook_level,
+  				
+  				material_name,
+  				material_amount
+  				
+  				
+  				
+  				
+  				)
   		
-  		values(#{recipe_no}, #{recipe_writer}, #{recipe_type}, #{recipe_name}, #{recipe_image}, #{recipe_content}, now(), now())
+  		values(
+  				#{recipe_no}, 
+  				#{recipe_writer}, 
+  				#{recipe_type}, 
+  				#{recipe_name}, 
+  				#{recipe_image}, 
+  				#{recipe_content}, 
+  				now(), 
+  				now(),
+  				
+  				#{cook_amount},
+  				#{cook_time},
+  				#{cook_level},
+  				
+  				#{material_name},
+  				#{material_amount}
+  				
+  				
+  				)
   </insert>
   
   <!-- 페이징 없이 보여줌  -->

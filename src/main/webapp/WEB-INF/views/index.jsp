@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
@@ -42,6 +43,7 @@
                 <a href="${pageContext.request.contextPath }/recipe/listCriteria" class="list-group-item list-group-item-action list-group-item-light p-3">레시피종류(페이징)</a>
                 <a href="${pageContext.request.contextPath }/recipe/add" class="list-group-item list-group-item-action list-group-item-light p-3">레시피등록(ckeditor)</a>
                 <a href="${pageContext.request.contextPath }/recipe/add2" class="list-group-item list-group-item-action list-group-item-light p-3">레시피등록(summernote)</a>
+                <a href="${pageContext.request.contextPath }/recipe/add3" class="list-group-item list-group-item-action list-group-item-light p-3">레시피등록(summernote)디자인수정</a>
                 <a href="${pageContext.request.contextPath }/board/listCriteria" class="list-group-item list-group-item-action list-group-item-light p-3">게시판</a>
                 <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3">QnA</a>
             </div>

@@ -1,5 +1,6 @@
 package com.spring.recipe.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class RecipeVO {
@@ -13,8 +14,66 @@ public class RecipeVO {
 	private Date recipe_updatedate;
 	private String recipe_writer;
 
+	/**************** 추가된 컬럼 *******************/
+	private String[] cook_image; // 완성 사진
+	private String cook_amount; // 요리 인분
+	private String cook_time; // 요리 시간
+	private String cook_level; // 요리 레벨
+	private String material_name; // 재료 이름
+	private String material_amount; // 재료 양
+
+	/********************************************/
+	
+	public String getCook_time() {
+		return cook_time;
+	}
+
+	public void setCook_time(String cook_time) {
+		this.cook_time = cook_time;
+	}
+
 	public String getRecipe_writer() {
 		return recipe_writer;
+	}
+
+	public String[] getCook_image() {
+		return cook_image;
+	}
+
+	public void setCook_image(String[] cook_image) {
+		this.cook_image = cook_image;
+	}
+
+	public String getCook_amount() {
+		return cook_amount;
+	}
+
+	public void setCook_amount(String cook_amount) {
+		this.cook_amount = cook_amount;
+	}
+
+	public String getCook_level() {
+		return cook_level;
+	}
+
+	public void setCook_level(String cook_level) {
+		this.cook_level = cook_level;
+	}
+
+	public String getMaterial_name() {
+		return material_name.toString();
+	}
+
+	public void setMaterial_name(String material_name) {
+		this.material_name = material_name;
+	}
+
+	public String getMaterial_amount() {
+		return material_amount;
+	}
+
+	public void setMaterial_amount(String material_amount) {
+		this.material_amount = material_amount;
 	}
 
 	public void setRecipe_writer(String recipe_writer) {
@@ -82,7 +141,9 @@ public class RecipeVO {
 		return "RecipeVO [recipe_no=" + recipe_no + ", recipe_type=" + recipe_type + ", recipe_name=" + recipe_name
 				+ ", recipe_image=" + recipe_image + ", recipe_content=" + recipe_content + ", recipe_regdate="
 				+ recipe_regdate + ", recipe_updatedate=" + recipe_updatedate + ", recipe_writer=" + recipe_writer
-				+ "]";
+				+ ", cook_image=" + Arrays.toString(cook_image) + ", cook_amount=" + cook_amount + ", cook_time="
+				+ cook_time + ", cook_level=" + cook_level + ", material_name=" + material_name + ", material_amount="
+				+ material_amount + "]";
 	}
 
 }
