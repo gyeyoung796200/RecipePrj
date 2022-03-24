@@ -18,7 +18,6 @@ public interface RecipeDAO {
 	//레시피 정보
 	public RecipeVO info(int recipe_no) throws Exception;
 	
-	
 	//레시피 기본 페이징(하단 번호 없음)
 	public List<RecipeVO> listCirteriaRecipe(Criteria cri) throws Exception;
 	
@@ -27,4 +26,28 @@ public interface RecipeDAO {
 	
 	//레시피 수정
 	public void update(RecipeVO recipeVO) throws Exception;
+	
+	//레시피 검색
+	public List<RecipeVO> searchList(SearchCriteria cri) throws Exception;
+	
+	//레시피 검색결과 수
+	public int searchCount(SearchCriteria cri) throws Exception;
+	
+	
+	//레시피 삭제
+	public void delete(int recipe_no) throws Exception;
+	
+	
+	//레시피 타입검색
+	public List<RecipeVO> searchRecipeList(SearchCriteria cri) throws Exception;
+	
+	//레시피 타입 검색결과 수
+	public int searchRecipeCount(SearchCriteria cri) throws Exception;
+	
+	//조회수 증가
+	public void updateViewCnt(int recipe_no) throws Exception;
+	
+	
+	
+
 }

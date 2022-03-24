@@ -3,9 +3,8 @@
 <title>글 작성 페이지</title>
 
 
-<div class="container">
-	<h2 class="text-center mt-2">글 작성</h2>
-	<div class="w-100">
+<div class="container" style="display: flex; justify-content: center;">
+	<div class="col-6 card">
 		<form id="write_form" role="form" action="${pageContext.request.contextPath }/board/write" method="post">
 		<input type="hidden" name="writer" value="${login.member_id }"/>
 		  <div class="form-group">

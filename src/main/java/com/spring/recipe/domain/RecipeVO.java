@@ -1,6 +1,5 @@
 package com.spring.recipe.domain;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class RecipeVO {
@@ -15,15 +14,26 @@ public class RecipeVO {
 	private String recipe_writer;
 
 	/**************** 추가된 컬럼 *******************/
-	private String[] cook_image; // 완성 사진
+
+	private String recipe_completeImg; // 완성사진
 	private String cook_amount; // 요리 인분
 	private String cook_time; // 요리 시간
 	private String cook_level; // 요리 레벨
 	private String material_name; // 재료 이름
 	private String material_amount; // 재료 양
 
+	private int recipe_viewCnt; // 조회수
+
 	/********************************************/
-	
+
+	public String getRecipe_completeImg() {
+		return recipe_completeImg;
+	}
+
+	public void setRecipe_completeImg(String recipe_completeImg) {
+		this.recipe_completeImg = recipe_completeImg;
+	}
+
 	public String getCook_time() {
 		return cook_time;
 	}
@@ -34,14 +44,6 @@ public class RecipeVO {
 
 	public String getRecipe_writer() {
 		return recipe_writer;
-	}
-
-	public String[] getCook_image() {
-		return cook_image;
-	}
-
-	public void setCook_image(String[] cook_image) {
-		this.cook_image = cook_image;
 	}
 
 	public String getCook_amount() {
@@ -136,14 +138,22 @@ public class RecipeVO {
 		this.recipe_updatedate = recipe_updatedate;
 	}
 
+	public int getRecipe_viewCnt() {
+		return recipe_viewCnt;
+	}
+
+	public void setRecipe_viewCnt(int recipe_viewCnt) {
+		this.recipe_viewCnt = recipe_viewCnt;
+	}
+
 	@Override
 	public String toString() {
 		return "RecipeVO [recipe_no=" + recipe_no + ", recipe_type=" + recipe_type + ", recipe_name=" + recipe_name
 				+ ", recipe_image=" + recipe_image + ", recipe_content=" + recipe_content + ", recipe_regdate="
 				+ recipe_regdate + ", recipe_updatedate=" + recipe_updatedate + ", recipe_writer=" + recipe_writer
-				+ ", cook_image=" + Arrays.toString(cook_image) + ", cook_amount=" + cook_amount + ", cook_time="
+				+ ", recipe_completeImg=" + recipe_completeImg + ", cook_amount=" + cook_amount + ", cook_time="
 				+ cook_time + ", cook_level=" + cook_level + ", material_name=" + material_name + ", material_amount="
-				+ material_amount + "]";
+				+ material_amount + ", recipe_viewCnt=" + recipe_viewCnt + "]";
 	}
 
 }

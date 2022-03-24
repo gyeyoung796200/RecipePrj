@@ -63,4 +63,50 @@ public class RecipeDAOImpl implements RecipeDAO {
 		session.update(NAMESPACE+".update", recipeVO);
 	}
 
+
+	@Override
+	public List<RecipeVO> searchList(SearchCriteria cri) throws Exception {
+
+		return session.selectList(NAMESPACE+".searchList", cri);
+	}
+
+
+	@Override
+	public int searchCount(SearchCriteria cri) throws Exception {
+		
+		return session.selectOne(NAMESPACE+".searchCount", cri);
+		
+	}
+
+
+	@Override
+	public void delete(int recipe_no) throws Exception {
+
+		session.delete(NAMESPACE+".delete", recipe_no);
+		
+		
+		
+	}
+
+
+	@Override
+	public List<RecipeVO> searchRecipeList(SearchCriteria cri) throws Exception {
+
+		return session.selectList(NAMESPACE+".searchRecipeList", cri);
+	}
+
+
+	@Override
+	public int searchRecipeCount(SearchCriteria cri) throws Exception {
+
+		return session.selectOne(NAMESPACE+".searchRecipeCount", cri);
+	}
+
+
+	@Override
+	public void updateViewCnt(int recipe_no) throws Exception {
+
+		session.update(NAMESPACE+".updateViewCnt", recipe_no);
+	}
+
 }

@@ -191,6 +191,8 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+
+		mav.addObject("subtitle", "회원정보");
 		mav.addObject("mainData", "member/info.jsp");
 		mav.addObject("member", service.infoMember(member));
 		mav.setViewName("index");

@@ -3,20 +3,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<div class="container">
-<h2 class="text-center mt-2">회원정보</h2>
+<div class="container" style="display: flex; justify-content: center;">
+
 
 <form action="${pageContext.request.contextPath }/member/modify" method="get">
 <input type="hidden" name="member_id" value="${member.member_id }"/>
 
 <div class="card align-self-center mt-3" style="background-color: ghostwhite;">
 	
-	<div class="row">
-		<div class="col-2"></div>
-		<div class="col-8 align-self-center mt-3" style="width:100%; height:auto;">
-			<img src="${member.member_image }" class="img-responsive" style="width:100%; height:100%;">
-		</div>
-		<div class="col-2"></div>
+	<div class="row" style="justify-content: center;">
+	
+			<div class="mt-3" style="width:100px; height:100px;">
+				<img src="${member.member_image }" class="img-responsive" style="width:100%; height:100%; border-radius: 50%;">
+			</div>
+		
 	</div>
 
 	<div class="card-body align-self-center">
@@ -56,7 +56,6 @@
 	
 		<div class="text-center">
 			<button type="submit" class="btn btn-primary">프로필수정</button>
-			<button class="btn btn-danger">뒤로</button>
 		</div>
 	</div>
 </div>

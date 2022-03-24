@@ -16,6 +16,7 @@
   	
   	<typeAlias type="com.spring.recipe.domain.RecipeVO" alias="RecipeVO"/>
   	<typeAlias type="com.spring.recipe.domain.Recipe_replyVO" alias="Recipe_replyVO"/>
+  	
   </typeAliases>
   
   </configuration>

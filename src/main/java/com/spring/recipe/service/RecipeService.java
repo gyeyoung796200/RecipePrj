@@ -3,6 +3,7 @@ package com.spring.recipe.service;
 import java.util.List;
 
 import com.spring.recipe.commons.paging.Criteria;
+import com.spring.recipe.commons.paging.SearchCriteria;
 import com.spring.recipe.domain.RecipeVO;
 
 public interface RecipeService {
@@ -25,5 +26,21 @@ public interface RecipeService {
 	
 	//레시피 수정
 	public void update(RecipeVO recipeVO) throws Exception;
+	
+	//레시피 검색
+	public List<RecipeVO> searchList(SearchCriteria cri) throws Exception;
+	
+	//레시피 검색결과 수
+	public int searchCount(SearchCriteria cri) throws Exception;
+	
+	//레시피 삭제
+	public void delete(int recipe_no) throws Exception;
+	
+	
+	//레시피 타입검색
+	public List<RecipeVO> searchRecipeList(SearchCriteria cri) throws Exception;
+		
+	//레시피 타입 검색결과 수
+	public int searchRecipeCount(SearchCriteria cri) throws Exception; 
 
 }

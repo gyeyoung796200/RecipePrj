@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.recipe.mappers.recipeMapper">
+  
+  <insert id="addRecipe" parameterType="RecipeVO">
+  insert into recipe(
+  				recipe_no, 
+  				recipe_writer, 
+  				recipe_type, 
+  				recipe_name, 
+  				recipe_image, 
+  				recipe_content, 
+  				recipe_regdate, 
+  				recipe_updatedate,
+  				
+  				cook_amount,
+  				cook_time,
+  				cook_level,
+  				
+  				material_name,
+  				material_amount,
+  				
+  				recipe_completeImg,
+  				
+  				recipe_viewCnt
+  				
+  				
+  				
+  				
+  				
+  				)
+  		
+  		values(
+  				#{recipe_no}, 
+  				#{recipe_writer}, 
+  				#{recipe_type}, 
+  				#{recipe_name}, 
+  				#{recipe_image}, 
+  				#{recipe_content}, 
+  				now(), 
+  				now(),
+  				
+  				#{cook_amount},
+  				#{cook_time},
+  				#{cook_level},
+  				
+  				#{material_name},
+  				#{material_amount},
+  				
+  				#{recipe_completeImg},
+  				
+				#{recipe_viewCnt}  				
+  				
+  				)
+  </insert>
+  
+  <!-- 페이징 없이 보여줌  -->
+  <select id="listRecipe" resultType="RecipeVO">
+  	select * from recipe where recipe_no > 0 order by recipe_no desc, recipe_regdate desc
+  </select>
+  
+  <select id="listCirteriaRecipe" parameterType="Criteria" resultType="RecipeVO">
+  	select * from recipe where recipe_no > 0 order by recipe_no desc, recipe_regdate desc limit #{pageStart}, #{perPageNum}
+  </select>
+  
+  <select id="totalCount" resultType="int">
+	select count(*) from recipe  
+  </select>
+  
+  <select id="info" resultType="RecipeVO">
+	select * from recipe where recipe_no = #{recipe_no}
+  </select>
+  
+  <update id="update">
+	update recipe set recipe_image = #{recipe_image}, recipe_name = #{recipe_name}, recipe_type = #{recipe_type}, recipe_content = #{recipe_content}, recipe_updatedate = now() where recipe_no = #{recipe_no}
+  </update>
+  
+  </mapper>

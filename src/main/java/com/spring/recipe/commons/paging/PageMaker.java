@@ -59,7 +59,8 @@ public class PageMaker {
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
 				.queryParam("perPageNum", criteria.getPerPageNum())
 				.queryParam("keyword", encoding(((SearchCriteria) criteria).getKeyword()))
-				.queryParam("searchType", ((SearchCriteria) criteria).getSearchType()).build();
+				.queryParam("searchType", ((SearchCriteria) criteria).getSearchType())
+				.queryParam("recipeType", ((SearchCriteria)criteria).getRecipeType()).build();
 
 		return uriComponents.toUriString();
 	}

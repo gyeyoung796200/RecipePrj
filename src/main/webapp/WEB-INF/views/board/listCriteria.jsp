@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="d-flex w-100" style="flex-wrap: wrap;">
+<div class="container" style="flex-wrap: wrap;">
 	<table class="table table-hover text-center">
 	  <thead>
 	    <tr>
@@ -44,7 +44,7 @@
 	 
 	 <div class="row">
 	 
-	 	<div class="col-1">
+	 	<div class="col-2">
 			<select class="form-control" name="searchType" id="searchType">
 	            <option value="n" <c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>선택</option>
 	            <option value="tcw" <c:out value="${searchCriteria.searchType eq 'tcw' ? 'selected' : ''}"/>>전체</option>
@@ -55,17 +55,17 @@
 	 	</div>
 	 	
 	 	
-	 	<div class="col-4">
+	 	<div class="col-3">
 	 		<div class="input-group">
 		 		<input type="text" class="form-control" name="keyword" id="keywordInput" value="${searchCriteria.keyword }" placeholder="입력">
 		 		<span>
-		 			<button type="button" class="btn btn-primary btn-flat" id="searchBtn">검색</button>
+		 			<button type="button" class="btn btn-primary btn-flat" id="searchBoard_Btn">검색</button>
 		 		</span>
 	 		</div> 
 	 	</div>
 	 	
 	 	
-	 	<div class="col-6 align-self-center">
+	 	<div class="col-5 align-self-center">
 	 		<nav aria-label="Page navigation example">
 		 	 	<ul class="pagination justify-content-center" style="margin-bottom:0px;">
 		            <c:if test="${pageMaker.prev}">
@@ -83,7 +83,7 @@
 	        </nav>
 	 	</div>
 	 	
-		<div class="col-1">
+		<div class="col-2">
 			<button type="button" class="btn btn-primary" id="write_btn">글작성</button>
 		</div>
 		
@@ -121,7 +121,7 @@
 	});
 
 
-    $("#searchBtn").on("click", function (event) {
+    $("#searchBoard_Btn").on("click", function (event) {
         self.location =
             "${pageContext.request.contextPath}/board/search${pageMaker.makeQuery(1)}"
             + "&searchType=" + $("#searchType option:selected").val()

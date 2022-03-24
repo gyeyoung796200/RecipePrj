@@ -5,6 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.recipe.commons.paging.Criteria;
 import com.spring.recipe.commons.paging.SearchCriteria;
@@ -30,9 +32,12 @@ public class RecipeServiceImpl implements RecipeService {
 		return dao.recipeList();
 	}
 
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public RecipeVO info(int recipe_no) throws Exception {
 
+		dao.updateViewCnt(recipe_no);
 		return dao.info(recipe_no);
 	}
 
@@ -52,6 +57,36 @@ public class RecipeServiceImpl implements RecipeService {
 	public void update(RecipeVO recipeVO) throws Exception {
 
 		dao.update(recipeVO);
+	}
+
+	@Override
+	public List<RecipeVO> searchList(SearchCriteria cri) throws Exception {
+
+		return dao.searchList(cri);
+	}
+
+	@Override
+	public int searchCount(SearchCriteria cri) throws Exception {
+
+		return dao.searchCount(cri);
+	}
+
+	@Override
+	public void delete(int recipe_no) throws Exception {
+
+		dao.delete(recipe_no);
+	}
+
+	@Override
+	public List<RecipeVO> searchRecipeList(SearchCriteria cri) throws Exception {
+
+		return dao.searchRecipeList(cri);
+	}
+
+	@Override
+	public int searchRecipeCount(SearchCriteria cri) throws Exception {
+		
+		return dao.searchRecipeCount(cri);
 	}
 
 }

@@ -3,9 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="container">
-	<h2 class="text-center mt-2">글 정보</h2>
-	<div class="w-100">
+<div class="container" style="display: flex; justify-content: center;">
+	<div class="col-5 card" style="border-right: 1px solid gray;">
 		<form role="form" id="read_form" action="${pageContext.request.contextPath }/board/update" method="get">
 		<input type="hidden" name="bno" value="${board.bno }"/>
 		<input type="hidden" name="page" value="${searchCriteria.page }"/>
@@ -13,15 +12,8 @@
 		<input type="hidden" name="searchType" value="${searchCriteria.searchType }"/>
 		<input type="hidden" name="keyword" value="${searchCriteria.keyword }"/>
 		
-		<!--  
-	 	 <div class="form-group">
-		    <label for="read_bno">글번호:${board.bno }</label>
-		  </div>
-		-->
-		  
-		  <div class="form-group">
-		    <label for="read_title">제목</label>
-		    <input type="text" name="title" class="form-control" value="${board.title }" id="read_title" disabled="disabled">
+		  <div class="form-group row">
+		  	<div class="col-12"><label for="read_title">제목 : ${board.title }</label></div>
 		  </div>
 		  
 		  <div class="form-group">
@@ -31,10 +23,13 @@
 		  
 		  <div class="form-group">
 		    <label for="read_writer">작성자</label>
-		    <div class="row" style="width: 500px;">
+		    <div class="row">
 		    	<div class="col-3">
-		    		<img alt="" src="${board.member_image }" class="img-fluid">
-		    		<input type="text" style="text-align:center;" name="writer" class="form-control" id="read_writer" value="${board.writer }" disabled="disabled">
+		    		<div class="img-box" style="width: 100px; height: 100px; position: relative;">
+		    			<img alt="" src="${board.member_image }" class="img-fluid" style="width:100%; height:100%; position: absolute; top:0; left:0; right:0; bottom:0; border-radius: 50%;">
+		    		</div>
+					<p style="text-align: center;">${board.writer }</p>		    		
+		    		<%-- <input type="text" style="text-align:center;" name="writer" class="form-control" id="read_writer" value="${board.writer }" disabled="disabled"> --%>
 		    	</div>
 				<div class="col-9">
 					<div class="form-group">
@@ -45,25 +40,22 @@
 					    <fmt:formatDate value="${board.updatedate }" pattern="yyyy-MM-dd HH:mm"/>
 					    <br/>
 					    <label for="read_viewCnt">조회수:${board.viewCnt }</label>
+					    <br/>
+					    
+					    <c:if test="${login.member_id == board.writer }">
+						  	<button type="submit" class="btn btn-success" id="update_btn">수정</button>
+						  	<button type="button" class="btn btn-danger" id="delete_btn" data-toggle="modal" data-target="#delete_btn_Modal">삭제</button>
+						</c:if>
+					  	<button type="button" class="btn btn-primary" id="list_btn">목록</button>
+					    
 					</div>
 				</div>
 		    </div>
 		  </div>
 		  
-		  
-		  <div class="form-group">
-		  
-		  <c:if test="${login.member_id == board.writer }">
-		  	<button type="submit" class="btn btn-success" id="update_btn">수정</button>
-		  	<button type="button" class="btn btn-danger" id="delete_btn" data-toggle="modal" data-target="#delete_btn_Modal">삭제</button>
-		  </c:if>
-		  	<button type="button" class="btn btn-primary" id="list_btn">목록</button>
-		  </div>
 		</form>
 		
-		
 		<hr/>
-		
 		
 		<!-- 댓글 입력 -->
 		<c:if test="${not empty login}">
@@ -96,7 +88,14 @@
 		<hr/>
 		<!-- 댓글 입력 end -->
 		
-		<!-- 댓글목록 -->
+		
+		
+	</div>
+	
+	
+	<div class="col-7 card">
+	
+	<!-- 댓글목록 -->
 		
 		<a href="" class="link-black text-lg" data-toggle="collapse" data-target="#repliesData"><i class="fa fa-comments-o margin-r-5 replyCount"></i></a>
 		
@@ -120,9 +119,12 @@
 			        </div>
 			    </div>
 			</div>
+			
+	</div>		
 	<!-- 댓글목록 end -->
-		
-	</div>
+	
+	
+	
 </div>
 
 
@@ -187,14 +189,19 @@
 	<div>
 		<div class=" row">
 			
-			<div class="col-1">
-				<div>
-					<img src="{{member_image}}" class="" style="max-width: 100%; height: auto;">
-					<p class="reply_writer text-center">{{reply_writer}}</p>
+			<div class="col-2">
+
+				<div style="width:50px; height:50px; position:relative;">
+
+					<div style="position:absolute; top:0; left:0; right:0; bottom:0;">
+						<img src="{{member_image}}" class="" style="width:100%; height:100%;  border-radius:50%;">
+						<p class="reply_writer">{{reply_writer}}</p>
+					</div>
 				</div>
+				<br/>
 			</div>
  
-  			<div class=" col-11">
+  			<div class=" col-10">
 				<textarea class="text-justify reply_text" rows="2" disabled="disabled" style="resize:none; width:100%;">{{escape reply_text}}</textarea>
   			</div>
 

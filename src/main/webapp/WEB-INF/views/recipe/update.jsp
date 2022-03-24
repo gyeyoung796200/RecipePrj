@@ -19,8 +19,10 @@
 	<input type="hidden" name="recipe_no" value="${cook.recipe_no }"/>
 	<input type="hidden" name="recipe_image" value="${cook.recipe_image }"/>
 	<input type="hidden" name="page" value="${criteria.page }"/>
-	<input type="hidden" name="perPageNum" value="${criteria.perPageNum }"/> 
+	<input type="hidden" name="perPageNum" value="${criteria.perPageNum }"/>
 	
+	<input type="hidden" name="keyword" value="${criteria.keyword }"/>
+	<input type="hidden" name="searchType" value="${criteria.searchType }"/>	
 	
 	<div class="row recipe_row" style="text-align: center; align-items: center;">
 		<div class="col-2">

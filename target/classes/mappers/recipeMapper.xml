@@ -20,7 +20,12 @@
   				cook_level,
   				
   				material_name,
-  				material_amount
+  				material_amount,
+  				
+  				recipe_completeImg,
+  				
+  				recipe_viewCnt
+  				
   				
   				
   				
@@ -42,8 +47,11 @@
   				#{cook_level},
   				
   				#{material_name},
-  				#{material_amount}
+  				#{material_amount},
   				
+  				#{recipe_completeImg},
+  				
+				#{recipe_viewCnt}  				
   				
   				)
   </insert>
@@ -68,5 +76,102 @@
   <update id="update">
 	update recipe set recipe_image = #{recipe_image}, recipe_name = #{recipe_name}, recipe_type = #{recipe_type}, recipe_content = #{recipe_content}, recipe_updatedate = now() where recipe_no = #{recipe_no}
   </update>
+  
+  
+  <delete id="delete" parameterType="int">
+  	delete from recipe where recipe_no = #{recipe_no}
+  </delete>
+  
+  
+
+	<select id="searchList" resultType="RecipeVO">
+		<![CDATA[
+		select * from recipe where recipe_no > 0
+		]]>
+		<include refid="search"/>
+		
+		<![CDATA[
+		order by recipe_no desc, recipe_regdate desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	
+	<select id="searchCount" resultType="int">
+		<![CDATA[
+		select count(recipe_no) from recipe where recipe_no > 0 
+		]]>
+		
+		<include refid="search"/>
+	</select>  
+	
+  
+  <sql id="search">
+  	<if test="searchType != null">
+  		<if test="searchType == 't'.toString()">
+  			and recipe_name like concat('%', #{keyword}, '%')
+  		</if>
+  		
+  		<if test="searchType == 'w'.toString()">
+  			and recipe_writer like concat('%', #{keyword}, '%')
+  		</if>
+  	</if>
+  </sql>
+  
+  
+  <!-- 레시피 타입검색 -->
+  
+  <sql id="searchRecipe">
+  	<if test="recipeType != null">
+  		<if test="recipeType == 'k'.toString()">
+  			and recipe_type = 'k'
+  		</if>
+  		
+  		<if test="recipeType == 'a'.toString()">
+  			and recipe_type = 'a'
+  		</if>
+  		
+  		<if test="recipeType == 'c'.toString()">
+  			and recipe_type = 'c'
+  		</if>
+  		
+  		<if test="recipeType == 'j'.toString()">
+  			and recipe_type = 'j'
+  		</if>
+  	</if>
+  </sql>
+  
+  
+  <select id="searchRecipeList" resultType="RecipeVO">
+		<![CDATA[
+		select * from recipe where recipe_no > 0
+		]]>
+		
+		<include refid="searchRecipe"/>
+		
+		<![CDATA[
+		order by recipe_no desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	
+	<select id="searchRecipeCount" resultType="int">
+		<![CDATA[
+		select count(*) from recipe where recipe_no > 0 
+		]]>
+		
+		<include refid="searchRecipe"/>
+	</select>
+	
+	
+	<!-- 조회수 증가 -->
+	<update id="updateViewCnt">
+	update recipe set recipe_viewCnt = recipe_viewCnt + 1 where recipe_no = #{recipe_no}
+	
+	</update>
+	
+	  
+  
+  
   
   </mapper>

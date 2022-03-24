@@ -1,6 +1,8 @@
 package com.spring.recipe;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Ignore;
@@ -12,7 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.spring.recipe.commons.paging.SearchCriteria;
+import com.spring.recipe.domain.RecipeVO;
 import com.spring.recipe.domain.Recipe_replyVO;
+import com.spring.recipe.persistence.RecipeDAO;
 import com.spring.recipe.persistence.Recipe_replyDAO;
 
 @WebAppConfiguration
@@ -25,6 +30,10 @@ public class Recipe_replyDAOTest {
 	
 	@Inject
 	private Recipe_replyDAO dao;
+	
+	
+	@Inject
+	private RecipeDAO recipeDAO;
 	
 	
 	@Ignore
@@ -70,6 +79,36 @@ public class Recipe_replyDAOTest {
 		
 	}
 	
+	@Test
+	public void testSearch() throws Exception{
+		
+		SearchCriteria cri = new SearchCriteria();
+		
+		cri.setPage(1);
+		cri.setKeyword("레시피");
+		cri.setSearchType("t");
+		
+		
+		List<RecipeVO> list = recipeDAO.searchList(cri);
+		
+		
+		for (RecipeVO recipeVO : list) {
+			
+			logger.info("제목: "+ recipeVO.getRecipe_name());
+		}
+
+		
+		int count = recipeDAO.searchCount(cri);
+		
+		logger.info("검색 결과 입니다 " + count);
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 }

@@ -41,8 +41,8 @@ public class BoardController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		mav.addObject("subtitle", "글작성");
 		mav.addObject("mainData", "board/write.jsp");
-		
 		mav.setViewName("index");
 		
 		return mav;
@@ -119,7 +119,8 @@ public class BoardController {
 			newnewCookie.setMaxAge(60 * 60 * 24);
 			response.addCookie(newnewCookie);
 		}
-		
+
+		mav.addObject("subtitle", "상세정보");
 		mav.addObject("board", board);
 		mav.addObject("mainData", "board/read.jsp");
 		mav.setViewName("index");
@@ -216,6 +217,8 @@ public class BoardController {
 
 		ModelAndView mav = new ModelAndView();
 		
+		
+		mav.addObject("subtitle", "게시판");
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("board", service.listCriteria(cri));
 		mav.addObject("mainData", "board/listCriteria.jsp");
@@ -249,6 +252,7 @@ public class BoardController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		mav.addObject("subtitle", "게시판");
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("mainData", "board/listCriteria.jsp");
 		mav.addObject("board", service.searchBoardList(searchCriteria));
