@@ -27,20 +27,24 @@
 				<input type="text" class="form-control" value="${member.member_id }" readonly="readonly">
 			</div>
 		</div>
-	
+		
+		<div class="row mb-2">
+			<div class="col-4 align-self-center">이메일</div>
+			<div class="col-8">
+				<input type="email" class="form-control" value="${member.member_email }" readonly="readonly">
+			</div>
+		</div>
+		
 		<div class="row mb-2">
 			<div class="col-4 align-self-center">성별</div>
 			<div class="col-8">
 				<input type="text" class="form-control" value="${member.member_gender }" readonly="readonly">
 			</div>
 		</div>
-		
 
 		<div class="row mb-2">
 			<div class="col-4 align-self-center">가입일</div>
 			<div class="col-8">
-			
-				
 				<input type="text" class="form-control" value="<fmt:formatDate value="${member.member_regdate }" pattern="yyyy-MM-dd HH:mm"/>" readonly="readonly">
 			</div>
 		</div>

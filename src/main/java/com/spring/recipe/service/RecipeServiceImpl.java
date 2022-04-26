@@ -37,7 +37,7 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public RecipeVO info(int recipe_no) throws Exception {
 
-		dao.updateViewCnt(recipe_no);
+//		dao.updateViewCnt(recipe_no);
 		return dao.info(recipe_no);
 	}
 
@@ -88,5 +88,13 @@ public class RecipeServiceImpl implements RecipeService {
 		
 		return dao.searchRecipeCount(cri);
 	}
+
+	@Override
+	public void updateViewCnt(int recipe_no) throws Exception {
+
+		dao.updateViewCnt(recipe_no);
+	}
+	
+	
 
 }

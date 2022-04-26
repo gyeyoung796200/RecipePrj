@@ -208,17 +208,58 @@ public class RecipeController {
 		
 		Cookie newCookie = null;
 		
-		mav.addObject("type", "한식");
 		//요청한 쿠키정보를 가져와 cookie배열에 담는다
 		Cookie[] cookies = request.getCookies();
-		
-		logger.info("request cookie :" + request.getCookies());
-		
-		
-		
-		
+				
+				//쿠키가 있으면
+				if(cookies != null) {
+					
+					//반복문을 통해 쿠키를 돌면서
+					for (Cookie cookie : cookies) {
+						
+						//쿠키 이름이 readCookie와 같은게 있으면
+						if(cookie.getName().equals("recipeCookie")) {
+							
+							//그 쿠키를 newCookie에 담는다
+							newCookie = cookie;
+						}
+					}
+				}
+				
+				
+				//newCookie = "recipeCookie"가 있으면
+				if(newCookie != null) {
+					
+					//새로운 값이 recipe_no를 포함하고 있지않으면 값을 셋팅함
+					if(!newCookie.getValue().contains("["+ recipe_no + "]")) {
+						
+						service.updateViewCnt(recipe_no);
+						newCookie.setValue(newCookie.getValue()+ "_[" + recipe_no + "]");
+						newCookie.setPath("/");
+						newCookie.setMaxAge(60 * 60 * 24);
+						response.addCookie(newCookie);
+					}
+				}
+				
+				//recipeCookie가 없으면
+				else {
+					
+					//조회수를 증가하고 readCookie를 만듬
+					service.updateViewCnt(recipe_no);
+					Cookie newnewCookie = new Cookie("recipeCookie", "[" + recipe_no + "]");
+					newnewCookie.setPath("/");
+					newnewCookie.setMaxAge(60 * 60 * 24);
+					response.addCookie(newnewCookie);
+				}
 
+		
+		
+		
+		
+				
 		if (recipe.getRecipe_type().equals("k")) {
+			
+			mav.addObject("type", "한식");
 
 		} else if (recipe.getRecipe_type().equals("c")) {
                    

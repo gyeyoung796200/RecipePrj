@@ -43,4 +43,6 @@ public interface RecipeService {
 	//레시피 타입 검색결과 수
 	public int searchRecipeCount(SearchCriteria cri) throws Exception; 
 
+	//조회수 증가
+	public void updateViewCnt(int recipe_no) throws Exception;
 }

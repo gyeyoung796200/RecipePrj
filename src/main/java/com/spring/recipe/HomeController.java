@@ -2,6 +2,7 @@ package com.spring.recipe;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.recipe.commons.paging.Criteria;
 import com.spring.recipe.commons.paging.PageMaker;
@@ -93,7 +96,7 @@ public class HomeController {
 		mav.addObject("recipe", service.listCirteriaRecipe(cri));
 
 		mav.setViewName("index");
-
+		
 		return mav;
 	}
 	

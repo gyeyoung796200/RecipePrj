@@ -9,9 +9,7 @@
 <body>
 <script>
 	
-	alert("로그인되었습니다");
-	
-	self.location = "${pageContext.request.contextPath}/";
+	location.href = "${pageContext.request.contextPath}/";
 </script>
 </body>
 </html>

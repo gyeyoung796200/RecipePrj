@@ -90,6 +90,40 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.delete(NAMESPACE+".deleteMember", memberVO);
 		
 	}
+
+
+	@Override
+	public int emailChk(String member_email) throws Exception {
+	
+		return sqlSession.selectOne(NAMESPACE+".emailChk", member_email);
+	}
+
+
+	@Override
+	public String find_Id(String member_email) throws Exception {
+
+		return sqlSession.selectOne(NAMESPACE+".find_Id", member_email);
+	}
+
+
+	@Override
+	public int find_Pw(String member_id, String member_email) throws Exception {
+
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("member_id", member_id );
+		map.put("member_email", member_email);
+		
+		return sqlSession.selectOne(NAMESPACE+".find_Pw", map);
+	}
+
+
+	@Override
+	public void pw_update(String member_id) throws Exception {
+
+		sqlSession.update(NAMESPACE+".pw_update", member_id);
+	}
 	
 	
 	

@@ -84,12 +84,12 @@ public class MemberController {
 		
 		service.insertMember(memberVO);
 		
-		rttr.addFlashAttribute("msg", "success");
+		rttr.addFlashAttribute("msg", "insertSuccess");
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("index");
-//		mav.setViewName("redirect:/");
+//		mav.setViewName("index");
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 	
@@ -115,9 +115,12 @@ public class MemberController {
 		else if(memberVO != null || BCrypt.checkpw(loginDTO.getMember_pw(), memberVO.getMember_pw())) {
 			
 			logger.info("로그인 정보가 일치합니다");
+			rttr.addFlashAttribute("msg", "loginSuccess");
+			
 			
 			model.addAttribute("member", memberVO);
 			mav.setViewName("/member/login");
+			
 		}
 		
 		//로그인유지 클릭하면
@@ -129,6 +132,8 @@ public class MemberController {
 			
 			service.keepLogin(memberVO.getMember_id(),httpSession.getId(), sessionLimit);
 		}
+		
+		
 		
 		return mav;
 	}
@@ -182,6 +187,43 @@ public class MemberController {
 		
 		return cnt;
 	}
+	
+	//이메일 중복검사
+	@RequestMapping("/emailChk")
+	@ResponseBody
+	@PostMapping
+	public int memberEmailChk(@RequestParam("member_email")String member_email) throws Exception{
+		
+		logger.info("이메일 정보:"+ member_email);
+		
+		int cnt = service.emailChk(member_email);
+
+		return cnt;
+	}
+	
+	
+	//이메일로 아이디찾기
+	@RequestMapping("/find_Id")
+	@ResponseBody
+	@PostMapping
+	public String find_Id(@RequestParam("member_email") String member_email) throws Exception{
+		
+		String member_id = service.find_Id(member_email);
+		
+		return member_id;
+	}
+	
+	//비밀번호 있는지 확인
+	@RequestMapping("/find_Pw")
+	@ResponseBody
+	@PostMapping
+	public int find_Pw(String member_id, String member_email) throws Exception{
+		
+		int cnt = service.find_Pw(member_id, member_email);
+		
+		return cnt;
+	}	
+	
 	
 	//회원정보
 	@RequestMapping(value = "/info", method = RequestMethod.GET)

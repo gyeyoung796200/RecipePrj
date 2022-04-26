@@ -14,6 +14,16 @@ public class MemberVO {
 	private String session_key;
 	private Date session_limit;
 
+	private String member_email;
+
+	public String getMember_email() {
+		return member_email;
+	}
+
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
 	public String getSession_key() {
 		return session_key;
 	}
@@ -45,7 +55,6 @@ public class MemberVO {
 	public void setMember_pw(String member_pw) {
 		this.member_pw = member_pw;
 	}
-
 
 	public String getMember_gender() {
 		return member_gender;
@@ -81,8 +90,9 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return "MemberVO [member_id=" + member_id + ", member_pw=" + member_pw +", member_gender=" + member_gender + ", member_image=" + member_image + ", member_regdate="
-				+ member_regdate + ", member_updatedate=" + member_updatedate + "]";
+		return "MemberVO [member_id=" + member_id + ", member_pw=" + member_pw + ", member_gender=" + member_gender
+				+ ", member_image=" + member_image + ", member_regdate=" + member_regdate + ", member_updatedate="
+				+ member_updatedate + ", member_email=" + member_email +"]";
 	}
 
 }

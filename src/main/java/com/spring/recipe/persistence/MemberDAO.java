@@ -19,6 +19,18 @@ public interface MemberDAO {
 	//아이디 중복체크
 	public int idChk(String member_id) throws Exception;
 	
+	//이메일 중복체크
+	public int emailChk(String member_email) throws Exception;
+	
+	//아이디 비밀번호 찾기
+		//아이디 찾기
+		public String find_Id(String member_email) throws Exception;
+		
+		//조건에 맞는 비밀번호 있는지 확인
+		public int find_Pw(String member_id, String member_email) throws Exception;
+			//조건에 맞는게 있으면 비밀번호 새로운 값으로 저장
+			public void pw_update(String member_id) throws Exception;
+		
 	//로그인유지
 	public void keepLogin(String member_id, String session_key, Date session_limit) throws Exception;
 	

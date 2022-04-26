@@ -21,19 +21,23 @@
 <!-- msg 변환 -->
 <script>
 	if(${msg == "delSuccess"}){alert('삭제 성공');}
-
+	if(${msg == "insertSuccess"}){alert('가입완료');}
+	if(${msg == "loginSuccess"}){alert('로그인완료');}
+	if(${msg == "loginFail"}){alert('Id, 비밀번호 확인 바람');}
 </script>
 
 <!-- header menu-->
 <header style="margin-bottom: 50px;">
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<a class="navbar-brand" href="/">RecipePrj</a>
+		<a class="navbar-brand" href="/"><h2>RecipePrj</h2></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         	<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse" style="justify-content: space-between;">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/recipe/add">레시피추가</a></li>
+				<c:if test="${!empty login }">
+					<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/recipe/add">레시피추가</a></li>
+				</c:if>
 				<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/board/listCriteria">게시판</a></li>
 			</ul>
 
@@ -60,9 +64,7 @@
 </header>
 <!-- header menu end-->
 
-<!-- main -->
-<main role="main">
-    <!-- section-->
+   <!-- section-->
 	<section class="jumbotron text-center">
 		<div class="container">
 			<c:if test="${subtitle == null }">
@@ -89,10 +91,14 @@
 		</div>
 	</section>
     <!-- section end-->
-    
+
+<!-- main -->
+<main role="main">
     <!-- content -->
-<c:import url="${mainData }"/>            	 
-      <!--content end-->
+    <c:if test="${mainData != null }">
+		<c:import url="${mainData }"></c:import>            	 
+    </c:if>
+	<!--content end-->
 </main>
 <!-- main end-->
 
@@ -107,23 +113,22 @@
 			
 			<form action="${pageContext.request.contextPath}/member/insert" method="post" enctype="multipart/form-data">
 				<div class="modal-body">
-					<div class="form-group">
+				
+					 <div class="form-group">
 						<label for="InputImage">프로필이미지</label>
-						<div id="image_container" style="border: 1px solid; width: 465px; height: 250px;">
-							<img style="width: 100%; height: 100%;"> 
-						</div>
-                                                    
-						<div class="input-group">
-							<div class="custom-file">
-								<input type="file" class="custom-file-input" name="file" id="InputImage" aria-describedby="inputGroupFileAddon04">
-								<label class="custom-file-label" for="InputImage">이미지선택</label>
+						<div id="image_container" style="border: 1px solid; width: 465px; height: 250px; position: relative;">
+							<img src="https://recipe1.ezmember.co.kr/img/pic_none3.gif" style="width: 100%; height: 100%;"> 
+							
+							<div class="custom-file" style="position: absolute; top:0; left:0; right: 0%; bottom:0; width: 100%; height:100%; opacity: 0;">
+								<input type="file" class="custom-file-input" name="file" id="InputImage" aria-describedby="inputGroupFileAddon04" style="position: absolute; width:100%; height:100%; top:0; left:0; right:0; bottom:0;">
+								 <label class="custom-file-label" for="InputImage">이미지선택</label>
 							</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="Input_ID">아이디</label>
-						<input type="text" class="form-control" name="member_id" id="InputID" onchange="idChk()">
+						<input type="text" class="form-control" name="member_id" id="InputID">
 					</div>
 
 					<div class="alert alert-success" id="id_true" role="alert" style="display: none;">사용가능한 아이디입니다</div>
@@ -136,12 +141,22 @@
 					
 					<div class="form-group">
 						<label for="InputPassword_chk_label">비밀번호확인</label>
-						<input type="password" class="form-control" onchange="pwChk()" id="insert_pwChk">
+						<input type="password" class="form-control"  id="insert_pwChk">
 					</div>
                                                 
 					<div class="alert alert-success" id="pw_true" role="alert" style="display: none;">비밀번호가 일치합니다</div>
 					<div class="alert alert-danger" id="pw_false" role="alert" style="display: none;">비밀번호가 일치하지않습니다</div>
                                                 
+                    <div class="form-group">
+						<label for="Input_Email">이메일</label>
+						<input type="email" class="form-control" name="member_email" id="insert_email" >
+						<!-- <button type="button" class="btn btn-primary" onclick="emailChk()">확인</button> -->
+					</div>
+					
+					<div class="alert alert-success" id="email_true" role="alert" style="display: none;">사용가능한 이메일입니다</div>
+					<div class="alert alert-danger" id="email_false" role="alert" style="display: none;">이미 사용중인 이메일입니다</div>
+					                           
+					                                                
 					<div class="form-group">
 						<label for="InputGender">성별</label>
 						<select name="member_gender" id="InputGender" class="form-control">
@@ -153,7 +168,8 @@
 				</div>
                                         
 				<div class="modal-footer">
-					<button type="submit" id="btn_join" class="btn btn-primary" disabled="disabled">회원가입</button>
+<!-- 					<button type="submit" id="btn_join" class="btn btn-primary" disabled="disabled">회원가입</button> -->
+					<button type="button" id="btn_join" class="btn btn-primary" onclick="joinChk()">회원가입</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 				</div>
 			</form>
@@ -184,7 +200,8 @@
 					</div>
 
 					<div class="form-group">
-						<label><input type="checkbox" name="useCookie"> 로그인 유지</label>
+						<label><input type="checkbox" name="useCookie"> 로그인 유지</label><br/>
+						<label><a data-toggle="modal" data-target="#findModal" style="text-decoration: none">아이디/비밀번호 찾기</a></label>
 					</div>
 					
 					<div class="alert alert-danger" id="login_false" role="alert" style="display: none;">로그인정보가 일치하지않습니다</div>
@@ -199,6 +216,55 @@
 	</div>
 </div>
 <!-- 로그인 팝업 end -->
+
+
+<!-- 아이디/비밀번호 찾기 팝업 -->
+<div class="modal fade" id="findModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="loginModalLabel">아이디/비밀번호 찾기</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+                               
+				<form id="find_Id">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="Find_ID">아이디 찾기</label>
+						<input type="text" class="form-control" name="member_email" id="findModal_email" placeholder="email을 입력하세요">
+					</div>
+					<div class="alert alert-success" id="result_findId" role="alert" style="display: none;"></div>
+				</div>
+                                        
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="find_idChk()">확인</button>
+				</div>
+				<hr/>
+			</form>
+			
+			<form id="find_Pw">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="Find_PW">비밀번호 찾기</label>
+						<input type="text" class="form-control" name="member_Id" id="find_Pw_ModalId" placeholder="id를 입력하세요">
+						<br/>
+						<input type="text" class="form-control" name="member_email" id="find_Pw_ModalEmail" placeholder="email을 입력하세요">
+					</div>
+
+					<div class="alert alert-success" id="result_findPw" role="alert" style="display: none;"></div>
+				</div>
+                                        
+				<div class="modal-footer">
+					<button type="button" onclick="find_pwChk()" class="btn btn-primary">확인</button>
+				</div>
+			</form>
+			
+		</div>
+	</div>
+</div>
+
+<!-- 아이디/비밀번호 찾기 팝업 end -->
+
 
 <!-- 회원탈퇴 팝업 -->
 <div class="modal fade" id="deleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -249,16 +315,36 @@
 			}
 			reader.readAsDataURL(this.files[0]);
 		}
-	});	 
+	});
 	</script>
 	<!-- end -->
 	
 	<!-- 회원가입 체크 -->
+		<script>
+		
+		var idChk = 1;
+		var pwChk = 1;
+		var emailChk = 1;
+		
+		function joinChk(){
+			
+			idChk();
+			pwChk();
+			emailChk();
+			
+			if(idChk == 0 && pwChk == 0 && emailChk == 0){
+				
+				alert('가입가능합니다');
+			}
+			else{
+				alert('가입 불가능 합니다');
+			}
+		};
+		
 		
 		<!-- 아이디 -->
-		<script>
 		function idChk(){
-			var member_id = $("#InputID").val();	
+			var member_id = $("#InputID").val();
 			console.log("아이디:"+member_id);
 			
 			$.ajax({
@@ -270,25 +356,30 @@
 						$("#id_false").css("display", "block");
 						$("#id_true").css("display", "none");
 						$("#btn_join").attr("disabled", true);
+						
+						idChk = 1;
 					}
 					else if(cnt == 0){
 						$("#id_true").css("display", "block");
 						$("#id_false").css("display", "none");
 						$("#btn_join").attr("disabled", false);
+						
+						idChk = 0;
+						
 					}
 					else if(cnt == 2){
 						$("#id_true").css("display", "none");
 						$("#id_false").css("display", "none");
 						$("#btn_join").attr("disabled", true);
+						
+						idChk = 1;
 					}
 				}
 			})
 		}
-		</script>
 		<!-- 아이디 end -->
 		
 		<!-- 비밀번호 -->	
-		<script>
 		function pwChk(){
 			console.log("비밀번호 체크");
 			var insert_pw = $("#insert_pw").val();
@@ -297,17 +388,70 @@
 				$("#pw_true").css("display", "block");
 				$("#pw_false").css("display", "none");
 				$("#btn_join").attr("disabled", false);
+				
+				pwChk = 0;
 			}
 			else if(insert_pw != insert_pwChk){
 				$("#pw_true").css("display", "none");
 				$("#pw_false").css("display", "block");
 				$("#btn_join").attr("disabled", true);
+				
+				pwChk = 1;
 			}
 		}
-		</script>
 		<!-- 비밀번호 end  -->
+		
+		<!-- 이메일 체크 -->
+		function emailChk(){
+			
+			var $email = document.querySelector('#insert_email');
+			
+			var $emailValue = document.querySelector('#insert_email').value;
+			
+			var regEmail = new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/);
+			
+			if(regEmail.test($emailValue) === true){
+				alert('정확한 표현식을 사용하셨습니다');
+				$.ajax({
+					url : "/member/emailChk",
+					type : "post",
+					data : {member_email : $emailValue},
+					
+					success : function(cnt){
+						if(cnt == 1){
+							$("#email_false").css("display", "block");
+							$("#email_true").css("display", "none");
+							
+							emailChk = 1;
+						}
+						else if(cnt == 0){
+							$("#email_true").css("display", "block");
+							$("#email_false").css("display", "none");
+							
+							emailChk = 0;
+						}
+					}
+				})
+			}
+			else if(regEmail.test($emailValue) === false){
+				alert('정확하지않은 표현식입니다');
+				
+				$email.value = null;
+				$("#email_false").css("display", "none");
+				$("#email_true").css("display", "none");
+				
+				emailChk = 1;
+			}
+		};
+		
+		
+		
+		
+		
+		</script>
+		<!-- 이메일 체크 end -->
 	
-	<!-- 회원가입 체크 -->	
+	<!-- 회원가입 체크 end-->	
 	
 	<!-- 로그인 체크 -->
 	<script>
@@ -348,6 +492,61 @@
 	<!-- 회원탈퇴 체크 end -->
 	
 	
+	<!-- 아이디 비밀번호 찾기 -->
+	<script>
+		<!-- 아이디 찾기 -->
+		function find_idChk(){
+			
+			var $findModal_email = document.querySelector('#findModal_email');
+			
+			console.log($findModal_email.value);
+			
+			$.ajax({
+				
+				url : "/member/find_Id",
+				method : "post",
+				data : {member_email : $findModal_email.value},
+				success: function(result){
+					
+					$("#result_findId").css("display", "block");
+					$("#result_findId").text("아이디는 "+ result + " 입니다");
+				}
+			})
+		};
+	</script>
+	
+	<script>
+		<!-- 비밀번호 있는지 확인 -->
+		
+		function find_pwChk(){
+			
+			var $pw_ModalId = document.querySelector('#find_Pw_ModalId');
+			var $pw_ModalEmail = document.querySelector('#find_Pw_ModalEmail');
+			
+			
+			$.ajax({
+				url : "/member/find_Pw",
+				method : "post",
+				data : {member_id : $pw_ModalId, member_email : $pw_ModalEmail},
+				success : function(cnt){
+
+					if(cnt == 1){
+						alert('아이디를 찾았습니다');
+					}
+					
+					else{
+						alert('일치하지않습니다');
+					}
+				}
+			})
+		};
+		
+	</script>
+	<!-- 아이디 비밀번호 찾기 end -->
+	
+	
+	
+	
 	<!--  검색기능 -->
 	<script>
 	
@@ -361,16 +560,6 @@
 	
 	var $recipType;
 
-		//타입선택시 keyword 활성화
-		/*
-		$searchType.addEventListener('click', function(event){
-			
-			console.log('비활성화 해제');
-			document.querySelector('#keywordInput').disabled = false;
-			document.querySelector('#keywordInput').value = "";
-		});
-		*/
-		
 		var $selectForm = document.querySelector('#selectForm');
 		
 		function createSelectBox(ch){
